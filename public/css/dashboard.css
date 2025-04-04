@@ -1,0 +1,102 @@
+body {
+    background-color: #f2f2f2;
+    color: #505255;
+}
+
+main {
+    display: flex;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    height: 100vh;
+    width: 20%;
+}
+
+nav img {
+    width: 200px;
+}
+
+nav div {
+    padding: 10px 20px 20px 20px;
+}
+
+nav i {
+    margin-right: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #505255;
+    margin: 10px 0;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 0 0 0 5px;
+}
+
+#search {
+    max-width: 300px;
+    height: 50px;
+    margin: auto 0;
+}
+
+#search span {
+    color: #505255;
+    background-color: white;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    padding-right: 6px;
+}
+
+#search input {
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+
+#search input:focus {
+    border-color: #dee2e6; /* Cambia el color según prefieras */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px 30px;
+}
+
+#profile-photo {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.form-text  {
+    margin: auto 20px auto 0;
+}
+
+.form-input {
+    border-radius: 5px !important;
+}
+
+@media (max-width: 1024px) {
+    nav {
+        width: 30%;
+    }    
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-DQvkBjpPgn7RC31MCQoOeC9TI2kdqa4+BSgNMNj8v77fdC77Kj5zpWFTJaaAoMbC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <title>Inventory 📝</title>
+</head>
+<body>
+    <main>
+        <nav>
+            <div>
+                <img src="kanban.png">
+                <div class="menu">
+                    <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Dashboard</a>
+                    <a href="#"><i class="fa fa-archive" aria-hidden="true"></i>Inventory</a>
+                    <a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i>Reports</a>
+                    <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i>Suppliers</a>
+                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Orders</a>
+                    <a href="#"><i class="fa fa-list" aria-hidden="true"></i>Manage Store</a>
+                </div>
+            </div>
+            <div>
+                <div class="settings">
+                    <a href="#"><i class="fa fa-gear" aria-hidden="true"></i>Settings</a>
+                    <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <header>
+                <div class="input-group" id="search">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"></i></span>
+                    <input type="text" placeholder="Search product, supplier, order" class="form-control shadow-none">
+                </div>
+                <div class="profile">
+                    <button type="button" class="btn"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
+                    <img src="./dog.png" id="profile-photo">
+                </div>
+            </header>
+            <section class="inventory">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
+                    Add Product
+                </button>
+  
+                <!-- Modal -->
+                <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="productModalLabel">New product</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="input-group">
+                                        <p class="form-text">Image</p>
+                                        <input type="text" class="form-control shadow-none form-input">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                                <button type="button" class="btn btn-primary" id="addProduct">Add Product</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <script src="https://kit.fontawesome.com/620f5764f6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

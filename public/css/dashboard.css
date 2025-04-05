@@ -95,6 +95,80 @@ header {
     border-radius: 5px !important;
 }
 
+.overall-inventory {
+    background-color: white;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 15px 20px;
+}
+
+.overall-inventory p {
+    margin: 0;
+}
+
+.row-inventory {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.col-inventory {
+    flex: 2;
+    position: relative;
+    padding: 0 50px;
+}
+
+.col-inventory:first-child {
+    flex: 1;
+    padding-left: 0;
+}
+
+.col-inventory:last-child {
+    padding-right: 0;
+}
+
+.col-inventory:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 1px;
+    background-color: #ddd;
+    transform: translateX(50%);
+}
+
+#categories-title {
+    color: dodgerblue;
+}
+
+#total-products-title {
+    color: orange;
+}
+
+#top-selling-title {
+    color: slateblue;
+}
+
+#low-stocks-title {
+    color: tomato;
+}
+
+.summary {
+    font-weight: bold;
+    margin: 10px 0 !important;
+}
+
+.overall-inventory-info {
+    color: #969799;
+}
+
+.divisor {
+    border-right: 1px solid #969799;
+    width: 1px;
+    margin-right: 0;
+}
+
 @media (max-width: 1024px) {
     nav {
         width: 30%;

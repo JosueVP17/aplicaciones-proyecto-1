@@ -7,3 +7,4 @@ const addProduct = document.getElementById('addProduct')
 addProduct.addEventListener('submit', async(event) => {
     await addProduct()
 })
+

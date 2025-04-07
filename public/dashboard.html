@@ -91,32 +91,121 @@
                     </div>
                 </div>
 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
-                    Add Product
-                </button>
-  
-                <!-- Modal -->
-                <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="productModalLabel">New product</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="input-group">
-                                        <p class="form-text">Image</p>
-                                        <input type="text" class="form-control shadow-none form-input">
+                <div class="products">
+                    <div class="products-header">
+                        <h5>Products</h5>
+                        <div class="products-actions">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
+                                Add Product
+                            </button>
+            
+                            <!-- Modal -->
+                            <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="productModalLabel">New product</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="imageLink" class="col-form-label">Image link</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="text" placeholder="Enter image link" id="imageLink" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="productName" class="col-form-label">Product Name</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="text" placeholder="Enter product name" id="productName" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="category" class="col-form-label">Category</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="text" placeholder="Select product category" id="category" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="buyingPrice" class="col-form-label">Buying Price</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="number" placeholder="Enter buying price" id="buyingPrice" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="quantity" class="col-form-label">Quantity</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="number" placeholder="Enter product quantity" id="quantity" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="unit" class="col-form-label">Unit</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="text" placeholder="Enter product unit" id="unit" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="expiryDate" class="col-form-label">Expiry Date</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="date" placeholder="Enter expiry date" id="expiryDate" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-4">
+                                                      <label for="threshold" class="col-form-label">Threshold value</label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                      <input type="text" placeholder="Enter threshold value" id="threshold" class="form-control shadow-none">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                                            <button type="button" class="btn btn-primary" id="addProduct">Add Product</button>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
-                                <button type="button" class="btn btn-primary" id="addProduct">Add Product</button>
-                            </div>
+
+                            <button class="btn btn-outline-secondary"><i class="fa fa-filter" aria-hidden="true"></i></i> Filters</button>
+                            <button class="btn btn-outline-secondary">Download all</button>
                         </div>
+                    </div>
+
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Products</th>
+                                <th>Buying price</th>
+                                <th>Quantity</th>
+                                <th>Threshold value</th>
+                                <th>Expiry Date</th>
+                                <th>Availability</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTable"></tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="btn btn-outline-secondary">Previous</button>
+                        <p>Page 1 of 10</p>
+                        <button class="btn btn-outline-secondary">Next</button>
                     </div>
                 </div>
             </section>

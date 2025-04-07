@@ -39,6 +39,10 @@ a {
     flex-direction: column;
 }
 
+.menu a {
+    margin-bottom: 20px;
+}
+
 .settings {
     display: flex;
     flex-direction: column;
@@ -46,6 +50,15 @@ a {
 
 .container {
     padding: 0 0 0 5px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    height: 12%;
+    max-height: 100px;
+    padding: 20px 30px;
 }
 
 #search {
@@ -71,11 +84,8 @@ a {
     border-color: #dee2e6; /* Cambia el color según prefieras */
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    background-color: white;
-    padding: 20px 30px;
+.profile {
+    margin: auto 0;
 }
 
 #profile-photo {
@@ -98,6 +108,7 @@ header {
 .overall-inventory {
     background-color: white;
     border-radius: 5px;
+    height: 16%;
     margin: 20px;
     padding: 15px 20px;
 }
@@ -159,14 +170,56 @@ header {
     margin: 10px 0 !important;
 }
 
-.overall-inventory-info {
-    color: #969799;
+.overall-inventory-info, th {
+    color: #969799 !important;
 }
 
 .divisor {
     border-right: 1px solid #969799;
     width: 1px;
     margin-right: 0;
+}
+
+.products {
+    background-color: white;
+    border-radius: 5px;
+    height: 76%;
+    margin: 20px;
+    padding: 15px 20px;
+}
+
+.products-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.products-header h5 {
+    margin: auto 0;
+}
+
+table {
+    font-size: 0.9em;
+}
+
+.availability-in-stock {
+    color: #28a745 !important;
+}
+
+.availability-low-stock {
+    color: #ffc107 !important;
+}
+
+.availability-no-stock {
+    color: #dc3545 !important;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination p {
+    margin: auto 0;
 }
 
 @media (max-width: 1024px) {

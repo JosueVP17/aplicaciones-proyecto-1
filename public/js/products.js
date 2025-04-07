@@ -3,8 +3,17 @@ import {collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where} fr
 
 const productsCollection = collection(db, 'products')
 
-export const addProduct = async(name, category, price, quantity, unit, expiry_date, threshold_value) => {
+export const addProduct = async() => {
     try {
+        const image = document.getElementById('image').value
+        const name = document.getElementById('name').value
+        const category = document.getElementById('category').value
+        const price = document.getElementById('price').value
+        const quantity = document.getElementById('quantity').value
+        const unit = document.getElementById('unit').value
+        const expiryDate = document.getElementById('expiryDate').value
+        const threshold = document.getElementById('threshold').value
+
         const existingProductQuery = query(productsCollection, where('name', '==', name), where('category', '==', category))
         const docsRef = await getDocs(existingProductQuery)
 
@@ -14,19 +23,24 @@ export const addProduct = async(name, category, price, quantity, unit, expiry_da
         }
 
         const newProduct = {
+            image: image,
             name: name,
             category: category,
             price: price,
             quantity: quantity,
             unit: unit,
-            expiry_date: expiry_date,
-            threshold_value: threshold_value
+            expiryDate: expiryDate,
+            threshold: threshold
         }
 
         // Agregar el producto y dejar que Firestore genere el ID automáticamente
         const newDoc = await addDoc(productsCollection, newProduct)
 
         console.log('Producto agregado con ID: ', newDoc.id)
+        
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addProduct'))
+        modal.hide()
+
     } catch (error) {
         console.error('Error al agregar el producto => ', error)
     }
@@ -34,18 +48,19 @@ export const addProduct = async(name, category, price, quantity, unit, expiry_da
     renderProducts()
 }
 
-export const updateProduct = async(docId, name, category, price, quantity, unit, expiry_date, threshold_value) => {
+export const updateProduct = async(docId, image, name, category, price, quantity, unit, expiryDate, threshold) => {
     try {
         const productRef = doc(productsCollection, docId); // Referencia directa al documento por su ID
 
         await updateDoc(productRef, {
+            image: image,
             name: name,
             category: category,
             price: price,
             quantity: quantity,
             unit: unit,
-            expiry_date: expiry_date,
-            threshold_value: threshold_value
+            expiryDate: expiryDate,
+            threshold: threshold
         })
 
         console.log(`Producto con ID: ${docId}, actualizado correctamente.`)
@@ -94,20 +109,21 @@ const renderProducts = async() => {
     productsTable.innerHTML = ''
 
     const products = await getProducts()
-    console.log(products)
 
     products.forEach((product) => {
         const productRow = document.createElement('tr')
+    
+
         productRow.innerHTML = `
             <td>${product.name}</td>
             <td>${product.price}</td>
             <td>${product.quantity} Packets</td>
-            <td>${product.threshold_value} Packets</td>
-            <td>${product.expiry_date}</td>
+            <td>${product.threshold} Packets</td>
+            <td>${product.expiryDate}</td>
         `
 
         const availability = document.createElement('td')
-        if(product.quantity >= 20) {
+        if(product.quantity > product.threshold) {
             availability.innerText = 'In stock'
             availability.classList.add('availability-in-stock')
         } else if(product.quantity == 0) {
@@ -122,12 +138,15 @@ const renderProducts = async() => {
 
         productsTable.appendChild(productRow)
     })
+
+    document.querySelectorAll('productClick').forEach((product) => {
+        product.addEventListener('click', async(event) => {
+
+        })
+    })
 }
 
 //ZONA DE PRUEBAS
-
-addProduct('Zapatos', 'Ropa', 150, 15, 'm/s', "20/10/2028", 10)
-addProduct('Reloj', 'Accesorio', 160, 0, 'm/s', "20/10/2027", 15)
 //updateProduct('Camisa de vestir', '1', 'Ropa', 340, 12, 'm/s', '20/10/2028', 10)
 //deleteProduct('1')
 //console.log(getProducts())

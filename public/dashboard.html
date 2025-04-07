@@ -40,7 +40,7 @@
                     <img src="./dog.png" id="profile-photo">
                 </div>
             </header>
-            <section class="inventory">
+            <section class="inventory" style="display: none;">
                 <div class="overall-inventory">
                     <h5 class="mb-3">Overall Inventory</h5>
                     <div class="row-inventory">
@@ -112,18 +112,18 @@
                                             <form>
                                                 <div class="row mb-3">
                                                     <div class="col-4">
-                                                      <label for="imageLink" class="col-form-label">Image link</label>
+                                                      <label for="image" class="col-form-label">Image link</label>
                                                     </div>
                                                     <div class="col-8">
-                                                      <input type="text" placeholder="Enter image link" id="imageLink" class="form-control shadow-none">
+                                                      <input type="text" placeholder="Enter image link" id="image" class="form-control shadow-none">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
                                                     <div class="col-4">
-                                                      <label for="productName" class="col-form-label">Product Name</label>
+                                                      <label for="name" class="col-form-label">Product Name</label>
                                                     </div>
                                                     <div class="col-8">
-                                                      <input type="text" placeholder="Enter product name" id="productName" class="form-control shadow-none">
+                                                      <input type="text" placeholder="Enter product name" id="name" class="form-control shadow-none">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -136,10 +136,10 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                     <div class="col-4">
-                                                      <label for="buyingPrice" class="col-form-label">Buying Price</label>
+                                                      <label for="price" class="col-form-label">Buying Price</label>
                                                     </div>
                                                     <div class="col-8">
-                                                      <input type="number" placeholder="Enter buying price" id="buyingPrice" class="form-control shadow-none">
+                                                      <input type="number" placeholder="Enter buying price" id="price" class="form-control shadow-none">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -178,7 +178,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
-                                            <button type="button" class="btn btn-primary" id="addProduct">Add Product</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addProduct" onclick="addProduct()">Add Product</button>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-bordered mt-4">
+                    <table class="table table-hover mt-4">
                         <thead>
                             <tr>
                                 <th>Products</th>
@@ -209,11 +209,18 @@
                     </div>
                 </div>
             </section>
+            <section id="productDetails">
+
+                <button id="backToTable" class="btn btn-primary">Back to table</button>
+            </section>
         </div>
     </main>
     <script src="https://kit.fontawesome.com/620f5764f6.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
     <!--PRUEBAS-->
-    <script type="module" src="./js/products.js"></script>
+    <script type="module">
+        import {addProduct} from './js/products.js'
+        window.addProduct = addProduct
+    </script>
 </body>
 </html>

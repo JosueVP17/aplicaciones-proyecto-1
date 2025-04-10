@@ -1,6 +1,26 @@
+.gray{
+    color: #969799 !important;
+    font-weight: 400 !important;
+}
+
+.black {
+    color: #505255 !important;
+    font-weight: 500 !important;
+}
+
+.dodgerblue {
+    color: dodgerblue !important;
+    font-weight: 500;
+}
+
+.hide {
+    display: none;
+}
+
 body {
     background-color: #f2f2f2;
     color: #505255;
+    overflow-y: hidden;
 }
 
 main {
@@ -8,7 +28,7 @@ main {
 }
 
 nav {
-    display: flex;
+    display:     flex;
     flex-direction: column;
     justify-content: space-between;
     background-color: white;
@@ -26,6 +46,11 @@ nav div {
 
 nav i {
     margin-right: 10px;
+}
+
+nav button {
+    width: 150px;
+    margin-left: -35px;
 }
 
 a {
@@ -170,10 +195,6 @@ header {
     margin: 10px 0 !important;
 }
 
-.overall-inventory-info, th {
-    color: #969799 !important;
-}
-
 .divisor {
     border-right: 1px solid #969799;
     width: 1px;
@@ -224,6 +245,67 @@ header {
 
 .pagination p {
     margin: auto 0;
+}
+
+.product-details {
+    background-color: white;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 15px 20px 5px 20px;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-link, .nav-link.active {
+    color: #505255 !important;
+}
+
+.nav-link {
+    border: none !important;
+    margin: 0 10px;
+}
+
+.nav-link.active {
+    border-bottom: 3px solid dodgerblue !important;
+}
+
+.primary-supplier-details {
+    max-width: 40%;
+}
+
+.primary-supplier-details p {
+    font-size: 0.9em;
+}
+
+.tab-pane {
+    margin: 20px 30px;
+}
+
+#overview .table th {
+    background-color: #f2f2f2;
+    border-bottom: none;
+}
+
+#overview .col-4 {
+    position: relative;
+    max-width: 20%;
+    margin: 0 auto;
+}
+
+#overview img {
+    display: block;
+    width: 150px;
+    margin: 2em auto;
+}
+
+#backToTable {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 10em;
 }
 
 @media (max-width: 1024px) {

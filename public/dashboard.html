@@ -15,7 +15,7 @@
                 <img src="kanban.png">
                 <div class="menu">
                     <a href="#"><i class="fa fa-home" aria-hidden="true"></i>Dashboard</a>
-                    <a href="#"><i class="fa fa-archive" aria-hidden="true"></i>Inventory</a>
+                    <a class="dodgerblue" href="#"><i class="fa fa-archive" aria-hidden="true"></i>Inventory</a>
                     <a href="#"><i class="fa fa-bar-chart" aria-hidden="true"></i>Reports</a>
                     <a href="#"><i class="fa fa-user-circle" aria-hidden="true"></i>Suppliers</a>
                     <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Orders</a>
@@ -24,8 +24,8 @@
             </div>
             <div>
                 <div class="settings">
-                    <a href="#"><i class="fa fa-gear" aria-hidden="true"></i>Settings</a>
-                    <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</a>
+                    <button class="btn"><i class="fa fa-gear" aria-hidden="true"></i>Settings</button>
+                    <button class="btn" id="logOutBtn"><i class="fa fa-sign-out" aria-hidden="true"></i>Log Out</button>
                 </div>
             </div>
         </nav>
@@ -40,25 +40,25 @@
                     <img src="./dog.png" id="profile-photo">
                 </div>
             </header>
-            <section class="inventory" style="display: none;">
+            <section class="inventory" id="inventory">
                 <div class="overall-inventory">
                     <h5 class="mb-3">Overall Inventory</h5>
                     <div class="row-inventory">
                         <div class="col-inventory">
                             <b id="categories-title">Categories</b>
-                            <p class="summary">14</p>
-                            <p class="overall-inventory-info">Last 7 days</p>
+                            <p class="summary" id="overall-categories"></p>
+                            <p class="gray">Last 7 days</p>
                         </div>
                         <div class="col-inventory">
                             <b id="total-products-title">Total products</b>
                             <div class="row">
                                 <div class="col">
-                                    <p class="summary">868</p>
-                                    <p class="overall-inventory-info">Last 7 days</p>
+                                    <p class="summary" id="overall-products"></p>
+                                    <p class="gray">Last 7 days</p>
                                 </div>
                                 <div class="col">
-                                    <p class="summary text-end">$25000</p>
-                                    <p class="overall-inventory-info text-end">Revenue</p>
+                                    <p class="summary text-end" id="overall-revenue"></p>
+                                    <p class="gray text-end">Revenue</p>
                                 </div>
                             </div>
                         </div>
@@ -66,12 +66,12 @@
                             <b id="top-selling-title">Top selling</b>
                             <div class="row">
                                 <div class="col">
-                                    <p class="summary">5</p>
-                                    <p class="overall-inventory-info">Last 7 days</p>
+                                    <p class="summary">0</p>
+                                    <p class="gray">Last 7 days</p>
                                 </div>
                                 <div class="col">
-                                    <p class="summary text-end">$2500</p>
-                                    <p class="overall-inventory-info text-end">Cost</p>
+                                    <p class="summary text-end">0</p>
+                                    <p class="gray text-end">Cost</p>
                                 </div>
                             </div>
                         </div>
@@ -79,12 +79,12 @@
                             <b id="low-stocks-title">Low stocks</b>
                             <div class="row">
                                 <div class="col">
-                                    <p class="summary">12</p>
-                                    <p class="overall-inventory-info">Ordered</p>
+                                    <p class="summary">0</p>
+                                    <p class="gray">Ordered</p>
                                 </div>
                                 <div class="col">
-                                    <p class="summary text-end">2</p>
-                                    <p class="overall-inventory-info text-end">Not in stock</p>
+                                    <p class="summary text-end" id="overall-notStock">0</p>
+                                    <p class="gray text-end">Not in stock</p>
                                 </div>
                             </div>
                         </div>
@@ -94,96 +94,11 @@
                 <div class="products">
                     <div class="products-header">
                         <h5>Products</h5>
-                        <div class="products-actions">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">
+                        <div>
+                            <!-- Button trigger modal ADD -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productAddModal">
                                 Add Product
                             </button>
-            
-                            <!-- Modal -->
-                            <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="productModalLabel">New product</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="image" class="col-form-label">Image link</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="text" placeholder="Enter image link" id="image" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="name" class="col-form-label">Product Name</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="text" placeholder="Enter product name" id="name" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="category" class="col-form-label">Category</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="text" placeholder="Select product category" id="category" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="price" class="col-form-label">Buying Price</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="number" placeholder="Enter buying price" id="price" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="quantity" class="col-form-label">Quantity</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="number" placeholder="Enter product quantity" id="quantity" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="unit" class="col-form-label">Unit</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="text" placeholder="Enter product unit" id="unit" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="expiryDate" class="col-form-label">Expiry Date</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="date" placeholder="Enter expiry date" id="expiryDate" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col-4">
-                                                      <label for="threshold" class="col-form-label">Threshold value</label>
-                                                    </div>
-                                                    <div class="col-8">
-                                                      <input type="text" placeholder="Enter threshold value" id="threshold" class="form-control shadow-none">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addProduct" onclick="addProduct()">Add Product</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                             <button class="btn btn-outline-secondary"><i class="fa fa-filter" aria-hidden="true"></i></i> Filters</button>
                             <button class="btn btn-outline-secondary">Download all</button>
                         </div>
@@ -192,35 +107,329 @@
                     <table class="table table-hover mt-4">
                         <thead>
                             <tr>
-                                <th>Products</th>
-                                <th>Buying price</th>
-                                <th>Quantity</th>
-                                <th>Threshold value</th>
-                                <th>Expiry Date</th>
-                                <th>Availability</th>
+                                <th class="gray">Products</th>
+                                <th class="gray">Buying price</th>
+                                <th class="gray">Quantity</th>
+                                <th class="gray">Threshold value</th>
+                                <th class="gray">Expiry Date</th>
+                                <th class="gray">Availability</th>
                             </tr>
                         </thead>
                         <tbody id="productsTable"></tbody>
                     </table>
+
                     <div class="pagination">
                         <button class="btn btn-outline-secondary">Previous</button>
-                        <p>Page 1 of 10</p>
+                        <p>Page 1 of 1</p>
                         <button class="btn btn-outline-secondary">Next</button>
                     </div>
                 </div>
             </section>
-            <section id="productDetails">
-
-                <button id="backToTable" class="btn btn-primary">Back to table</button>
+            <section class="product-details hide" id="product-details">
+                <div class="details-header">
+                    <h5 id="tab-product-title"></h5>
+                    <div>
+                        <!-- Button trigger modal UPDATE -->
+                        <button type="button" class="btn btn-outline-secondary" id="edit" data-bs-toggle="modal" data-bs-target="#productUpdateModal">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Update Product
+                        </button>
+                        <!-- Button trigger modal DELETE -->
+                        <button type="button" class="btn btn-outline-danger" id="delete" data-bs-toggle="modal" data-bs-target="#productDeleteModal">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> Delete Product
+                        </button>
+                        <button class="btn btn-outline-secondary">Download</button>
+                    </div>
+                </div>
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="purchases-tab" data-bs-toggle="tab" data-bs-target="#purchases" type="button" role="tab" aria-controls="purchases" aria-selected="false">Profile</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="adjustments-tab" data-bs-toggle="tab" data-bs-target="#adjustments" type="button" role="tab" aria-controls="adjustments" aria-selected="false">Contact</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">History</button>
+                    </li>
+                </ul>
+                <!-- Overview tab -->
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="primary-supplier-details mb-1">
+                                    <h6 class="mb-3">Primary details</h6>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Product name</p>
+                                        <p class="black" id="primary-details-name"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Product ID</p>
+                                        <p class="black" id="primary-details-id"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Product category</p>
+                                        <p class="black" id="primary-details-category"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Expiry Date</p>
+                                        <p class="black" id="primary-details-expiryDate"></p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Threshold value</p>
+                                        <p class="black" id="primary-details-threshold"></p>
+                                    </div>
+                                </div>
+                                <div class="primary-supplier-details">
+                                    <h6 class="mb-3">Supplier details</h6>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Supplier name</p>
+                                        <p class="black">Josue Valenzuela</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="gray">Contact number</p>
+                                        <p class="black">123456789</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th class="black">Store Name</th>
+                                                <th class="black">Stock in hand</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="gray">Store 1</td>
+                                                <td class="dodgerblue" id="primary-details-store1"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="gray">Store 2</td>
+                                                <td class="dodgerblue">0</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <img src="" id="primary-details-img">
+                                <div class="d-flex justify-content-between">
+                                    <p class="gray">Opening stock</p>
+                                    <p id="primary-details-stock"></p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="gray">Remaining stock</p>
+                                    <p id="primary-details-remaining">34</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="gray">On the way</p>
+                                    <p>0</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="gray">Threshold value</p>
+                                    <p id="primary-details-thresholdValue">12</p>
+                                </div>
+                                <button id="backToTable" class="btn btn-primary">Back to table</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="purchases" role="tabpanel" aria-labelledby="purchases-tab">...</div>
+                    <div class="tab-pane fade" id="adjustments" role="tabpanel" aria-labelledby="adjustments-tab">...</div>
+                    <div class="tab-pane fade" id="history" role="=tabpanel" aria-labelledby="history-tab">...</div>
+                </div>
             </section>
-        </div>
+            <!-- Modal ADD-->
+            <div class="modal fade" id="productAddModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="productModalLabel">New product</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addmage" class="col-form-label">Image link</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="text" placeholder="Enter image link" id="addImage" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addName" class="col-form-label">Product Name</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="text" placeholder="Enter product name" id="addName" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addCategory" class="col-form-label">Category</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="text" placeholder="Select product category" id="addCategory" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addPrice" class="col-form-label">Buying Price</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="number" placeholder="Enter buying price" id="addPrice" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addQuantity" class="col-form-label">Quantity</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="number" placeholder="Enter product quantity" id="addQuantity" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addUnit" class="col-form-label">Unit</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="text" placeholder="Enter product unit" id="addUnit" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addExpiryDate" class="col-form-label">Expiry Date</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="date" placeholder="Enter expiry date" id="addExpiryDate" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                      <label for="addThreshold" class="col-form-label">Threshold value</label>
+                                    </div>
+                                    <div class="col-8">
+                                      <input type="text" placeholder="Enter threshold value" id="addThreshold" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="addProduct" onclick="addProduct()">Add Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal UPDATE-->
+            <div class="modal fade" id="productUpdateModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="productModalLabel">Update product</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateImage" class="col-form-label">Image link</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" placeholder="Enter image link" id="updateImage" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateName" class="col-form-label">Product Name</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" placeholder="Enter product name" id="updateName" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateCategory" class="col-form-label">Category</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" placeholder="Select product category" id="updateCategory" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updatePrice" class="col-form-label">Buying Price</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" placeholder="Enter buying price" id="updatePrice" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateQuantity" class="col-form-label">Quantity</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" placeholder="Enter product quantity" id="updateQuantity" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateUnit" class="col-form-label">Unit</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" placeholder="Enter product unit" id="updateUnit" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="updateExpiryDate" class="col-form-label">Expiry Date</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="date" placeholder="Enter expiry date" id="updateExpiryDate" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="uptadeThreshold" class="col-form-label">Threshold value</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" placeholder="Enter threshold value" id="updateThreshold" class="form-control shadow-none">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="updateProduct" onclick="updateProduct()">Update Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal DELETE-->
+            <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="productModalLabel">Are you sure to delete this product?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteProduct" onclick="deleteProduct()">Delete</button>
+                        </div>
     </main>
     <script src="https://kit.fontawesome.com/620f5764f6.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.4/dist/js/bootstrap.bundle.min.js"></script>
-    <!--PRUEBAS-->
     <script type="module">
-        import {addProduct} from './js/products.js'
+        import {addProduct, updateProduct, deleteProduct} from './js/products.js'
         window.addProduct = addProduct
+        window.updateProduct = updateProduct
+        window.deleteProduct = deleteProduct
     </script>
 </body>
 </html>

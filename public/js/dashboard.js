@@ -1,10 +1,11 @@
-import { products } from "./products.js"
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js"
-import { getProducts, addProduct, updateProduct, deleteProduct } from "./products.js"
 
-const addProduct = document.getElementById('addProduct')
+export const logOut = async () => {
+    return signOut(auth)
+}
 
-addProduct.addEventListener('submit', async(event) => {
-    await addProduct()
+onAuthStateChanged(auth, (user) => {
+    if(!user) {
+        window.location.href = 'index.html'
+    }
 })
-

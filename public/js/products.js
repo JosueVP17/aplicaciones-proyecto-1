@@ -1,18 +1,25 @@
 import {db} from "./firebase-config.js"
-import {collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js"
+import {collection, addDoc, getDocs, getDoc, updateDoc, deleteDoc, doc, query, where} from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js"
+import {logOut} from "./auth.js"
 
 const productsCollection = collection(db, 'products')
 
+const logoutBtn = document.getElementById('logOutBtn')
+logoutBtn.addEventListener('click', async() => {
+    await logOut()
+    window.location.href = 'index.html'
+})
+
 export const addProduct = async() => {
     try {
-        const image = document.getElementById('image').value
-        const name = document.getElementById('name').value
-        const category = document.getElementById('category').value
-        const price = document.getElementById('price').value
-        const quantity = document.getElementById('quantity').value
-        const unit = document.getElementById('unit').value
-        const expiryDate = document.getElementById('expiryDate').value
-        const threshold = document.getElementById('threshold').value
+        const image = document.getElementById('addImage').value
+        const name = document.getElementById('addName').value
+        const category = document.getElementById('addCategory').value
+        const price = document.getElementById('addPrice').value
+        const quantity = document.getElementById('addQuantity').value
+        const unit = document.getElementById('addUnit').value
+        const expiryDate = document.getElementById('addExpiryDate').value
+        const threshold = document.getElementById('addThreshold').value
 
         const existingProductQuery = query(productsCollection, where('name', '==', name), where('category', '==', category))
         const docsRef = await getDocs(existingProductQuery)
@@ -33,24 +40,33 @@ export const addProduct = async() => {
             threshold: threshold
         }
 
-        // Agregar el producto y dejar que Firestore genere el ID automáticamente
         const newDoc = await addDoc(productsCollection, newProduct)
 
         console.log('Producto agregado con ID: ', newDoc.id)
         
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addProduct'))
+        const modal = bootstrap.Modal.getInstance(document.getElementById('productAddModal'))
         modal.hide()
 
     } catch (error) {
-        console.error('Error al agregar el producto => ', error)
+        console.error(error)
     }
 
     renderProducts()
 }
 
-export const updateProduct = async(docId, image, name, category, price, quantity, unit, expiryDate, threshold) => {
+export const updateProduct = async() => {
     try {
-        const productRef = doc(productsCollection, docId); // Referencia directa al documento por su ID
+        const id = document.getElementById('updateProduct').getAttribute('data-id')
+        const image = document.getElementById('updateImage').value
+        const name = document.getElementById('updateName').value
+        const category = document.getElementById('updateCategory').value
+        const price = document.getElementById('updatePrice').value
+        const quantity = document.getElementById('updateQuantity').value
+        const unit = document.getElementById('updateUnit').value
+        const expiryDate = document.getElementById('updateExpiryDate').value
+        const threshold = document.getElementById('updateThreshold').value
+
+        const productRef = doc(productsCollection, id)
 
         await updateDoc(productRef, {
             image: image,
@@ -63,35 +79,46 @@ export const updateProduct = async(docId, image, name, category, price, quantity
             threshold: threshold
         })
 
-        console.log(`Producto con ID: ${docId}, actualizado correctamente.`)
+        const modal = bootstrap.Modal.getInstance(document.getElementById('productUpdateModal'))
+        modal.hide()
+
+        document.getElementById('tab-product-title').innerText = name
+        document.getElementById('primary-details-name').innerText = name
+        document.getElementById('primary-details-category').innerText = category
+        document.getElementById('primary-details-expiryDate').innerText = expiryDate
+        document.getElementById('primary-details-threshold').innerText = threshold
+        document.getElementById('primary-details-img').src = image
+        document.getElementById('primary-details-stock').innerText = quantity
+        document.getElementById('primary-details-remaining').innerText = quantity
+        document.getElementById('primary-details-thresholdValue').innerText = threshold
+        document.getElementById('primary-details-store1').innerText = quantity
     } catch (error) {
-        console.error('Error al actualizar el producto => ', error)
+        console.error(error)
     }
 }
 
-export const deleteProduct = async(docId) => {
+export const deleteProduct = async() => {
     try {
-        const existingProductQuery = query(productsCollection, where('id', '==', id)) //hace una consulta
-        const docsRef = await getDocs(existingProductQuery) //regresa los documentos que encontro
-        
-        if(docsRef.empty)
-        {
-            console.log('El producto que deseas eliminar no existe.')
-            return
-        }
+        const id = document.getElementById('deleteProduct').getAttribute('data-id')
+        const productRef = doc(productsCollection, id)
 
-        const productRef = docsRef.docs[0].ref // hace referencia al primer documento
+        await deleteDoc(productRef)
 
-        await deleteDoc(productRef);
-        console.log(`Producto con ID: ${docId}, eliminado correctamente.`)
+        const modal = bootstrap.Modal.getInstance(document.getElementById('productDeleteModal'))
+        modal.hide()
+
+        const inventory = document.getElementById('inventory')
+        inventory.classList.toggle('hide')
+
+        const productDetails = document.getElementById('product-details')
+        productDetails.classList.toggle('hide')
     } catch (error) {
-        console.error('Error al eliminar el producto => ', error)
+        console.error(error)
     }
-};
+}
 
 export const getProducts = async() => {
     try {
-
         const products = await getDocs(productsCollection)
         return products.docs.map((doc) => ({
             id: doc.id,
@@ -101,7 +128,6 @@ export const getProducts = async() => {
     } catch (error) {
         console.error('Error al obtener los productos => ', error)
     }
-    
 }
 
 const renderProducts = async() => {
@@ -109,10 +135,21 @@ const renderProducts = async() => {
     productsTable.innerHTML = ''
 
     const products = await getProducts()
+    document.getElementById('overall-products').innerText = products.length
+
+    const categories = []
+    let revenue = 0
+    let notStock = 0
 
     products.forEach((product) => {
+        if(!categories.includes(product.category)) {
+            categories.push(product.category)
+        }
+        revenue += product.price * product.quantity
+        if(product.quantity == 0) notStock++
+
         const productRow = document.createElement('tr')
-    
+        productRow.setAttribute('data-id', product.id)
 
         productRow.innerHTML = `
             <td>${product.name}</td>
@@ -136,19 +173,81 @@ const renderProducts = async() => {
 
         productRow.append(availability)
 
+        productRow.addEventListener('click', () => {
+            const inventory = document.getElementById('inventory')
+            inventory.classList.toggle('hide')
+
+            const productDetails = document.getElementById('product-details')
+            productDetails.classList.toggle('hide')
+
+            const dataId = productRow.getAttribute('data-id')
+            const editBtn = document.getElementById('edit')
+            editBtn.setAttribute('data-id', dataId)
+
+            const deleteBtn = document.getElementById('delete')
+            deleteBtn.setAttribute('data-id', dataId)
+
+            document.getElementById('tab-product-title').innerText = product.name
+            document.getElementById('primary-details-name').innerText = product.name
+            document.getElementById('primary-details-id').innerText = product.id
+            document.getElementById('primary-details-category').innerText = product.category
+            document.getElementById('primary-details-expiryDate').innerText = product.expiryDate
+            document.getElementById('primary-details-threshold').innerText = product.threshold
+            document.getElementById('primary-details-img').src = product.image
+            document.getElementById('primary-details-stock').innerText = product.quantity
+            document.getElementById('primary-details-remaining').innerText = product.quantity
+            document.getElementById('primary-details-thresholdValue').innerText = product.threshold
+            document.getElementById('primary-details-store1').innerText = product.quantity
+        })
+
         productsTable.appendChild(productRow)
     })
 
-    document.querySelectorAll('productClick').forEach((product) => {
-        product.addEventListener('click', async(event) => {
-
-        })
-    })
+    document.getElementById('overall-categories').innerText = categories.length
+    document.getElementById('overall-revenue').innerText = '$' + revenue
+    document.getElementById('overall-notStock').innerText = notStock
 }
 
-//ZONA DE PRUEBAS
-//updateProduct('Camisa de vestir', '1', 'Ropa', 340, 12, 'm/s', '20/10/2028', 10)
-//deleteProduct('1')
-//console.log(getProducts())
+document.getElementById('backToTable').addEventListener('click', () => {
+    const inventory = document.getElementById('inventory')
+    inventory.classList.toggle('hide')
+
+    const productDetails = document.getElementById('product-details')
+    productDetails.classList.toggle('hide')
+
+    renderProducts()
+})
+
+document.getElementById('edit').addEventListener('click', async (event) => {
+    const productId = event.target.getAttribute('data-id')
+    const productRef = doc(productsCollection, productId)
+    const productSnapshot = await getDoc(productRef)
+    const product = productSnapshot.data()
+
+    const image = document.getElementById('updateImage')
+    const name = document.getElementById('updateName')    
+    const category = document.getElementById('updateCategory')
+    const price = document.getElementById('updatePrice')
+    const quantity = document.getElementById('updateQuantity')
+    const unit = document.getElementById('updateUnit')
+    const expiryDate = document.getElementById('updateExpiryDate')
+    const threshold = document.getElementById('updateThreshold')
+
+    image.value = product.image
+    name.value = product.name
+    category.value = product.category
+    price.value = product.price
+    quantity.value = product.quantity
+    unit.value = product.unit
+    expiryDate.value = product.expiryDate
+    threshold.value = product.threshold
+
+    document.getElementById('updateProduct').setAttribute('data-id', productId)
+})
+
+document.getElementById('delete').addEventListener('click', async(event) => {
+    const productId = event.target.getAttribute('data-id')
+    document.getElementById('deleteProduct').setAttribute('data-id', productId)
+})
 
 renderProducts()
